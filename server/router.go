@@ -15,5 +15,5 @@ func (s *Server) setupRoutes() {
 	s.Router.HandleFunc("/_healthz", handler.Healthz).Methods(http.MethodGet).Name("Health")
 
 	api := s.Router.PathPrefix(v1API).Subrouter()
-	api.HandleFunc("/send-sms", handler.GetDevices(s.DriverV45)).Methods(http.MethodGet).Name("GetDevices")
+	api.HandleFunc("/devices", handler.GetDevices(s.DriverV45)).Methods(http.MethodGet).Name("GetDevices")
 }

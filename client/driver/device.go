@@ -50,7 +50,7 @@ func (c *Client) FindActiveDevices(ctx context.Context, fromIP, toIP string) ([]
 			return nil, err
 		}
 
-		if val != nil {
+		if val == nil {
 			continue
 		}
 
