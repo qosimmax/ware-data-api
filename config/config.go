@@ -9,21 +9,8 @@ import (
 
 // Config contains environment variables.
 type Config struct {
-	Port                       string  `envconfig:"PORT" default:"8000"`
-	JaegerAgentHost            string  `envconfig:"JAEGER_AGENT_HOST" default:"localhost"`
-	JaegerAgentPort            string  `envconfig:"JAEGER_AGENT_PORT" default:"6831"`
-	JaegerSamplerType          string  `envconfig:"JAEGER_SAMPLER_TYPE" default:"const"`
-	JaegerSamplerParam         float64 `envconfig:"JAEGER_SAMPLER_PARAM" default:"1"`
-	DatabasePassword           string  `envconfig:"DATABASE_PASSWORD" required:"true"`
-	DatabaseUser               string  `envconfig:"DATABASE_USER" required:"true"`
-	DatabaseURL                string  `envconfig:"DATABASE_URL" default:"127.0.0.1"`
-	DatabasePort               string  `envconfig:"DATABASE_PORT" default:"5432"`
-	DatabaseDB                 string  `envconfig:"DATABASE_DB" default:"postgres"`
-	DatabaseOptions            string  `envconfig:"DATABASE_OPTIONS" default:"?sslmode=disable"`
-	DatabaseMaxConnections     int     `envconfig:"DATABASE_MAX_CONNECTIONS" default:"12"`
-	DatabaseMaxIdleConnections int     `envconfig:"DATABASE_MAX_IDLE_CONNECTIONS" default:"3"`
-	RedisAddress               string  `envconfig:"REDIS_ADDRESS" required:"true"`
-	NatsURL                    string  `envconfig:"NATS_URL" required:"true"`
+	Port    string `envconfig:"PORT" default:"8000"`
+	UDPPort string `envconfig:"UDP_PORT" default:"1111"`
 }
 
 // LoadConfig reads environment variables and populates Config.

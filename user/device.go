@@ -11,12 +11,12 @@ type DeviceData struct {
 
 // DeviceFinder is an interface for getting active devices
 type DeviceFinder interface {
-	FindActiveDevices(ctx context.Context) ([]DeviceData, error)
+	FindActiveDevices(ctx context.Context, startIP, endIP string) ([]DeviceData, error)
 }
 
 // LDDeviceAdder is an interface for adding an LD device
 type LDDeviceAdder interface {
-	AddLDDevice(ctx context.Context, data DeviceData) error
+	AddLDDevice(ctx context.Context, data DeviceData) (int, error)
 }
 
 // LDDeviceGetter is an interface for getting a number of logical devices

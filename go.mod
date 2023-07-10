@@ -3,6 +3,7 @@ module ware-data-api
 go 1.19
 
 require (
+	github.com/go-ole/go-ole v1.2.6
 	github.com/gorilla/mux v1.8.0
 	github.com/joho/godotenv v1.5.1
 	github.com/kelseyhightower/envconfig v1.4.0

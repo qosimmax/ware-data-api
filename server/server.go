@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"ware-data-api/client/driver"
 	"ware-data-api/config"
 
 	"github.com/gorilla/mux"
@@ -20,15 +21,21 @@ import (
 
 // Server holds the HTTP server, router, config and all clients.
 type Server struct {
-	Config *config.Config
-	HTTP   *http.Server
-	Router *mux.Router
+	Config    *config.Config
+	HTTP      *http.Server
+	DriverV45 *driver.Client
+	Router    *mux.Router
 }
 
 // Create sets up the HTTP server, router and all clients.
 // Returns an error if an error occurs.
 func (s *Server) Create(ctx context.Context, config *config.Config) error {
-	//metrics.RegisterPrometheusCollectors()
+	var drvClient driver.Client
+	if err := drvClient.Init(config); err != nil {
+		return fmt.Errorf("driver client: %w", err)
+	}
+
+	s.DriverV45 = &drvClient
 	s.Config = config
 	s.Router = mux.NewRouter()
 	s.HTTP = &http.Server{
