@@ -9,6 +9,7 @@ type WareData struct {
 	Type  int
 }
 
+// WareDataAdder  is an interface for adding ware data to device
 type WareDataAdder interface {
-	AddWareData(ctx context.Context, wares []WareData) error
+	AddWareData(ctx context.Context, ldNumber int, wares []WareData) error
 }
