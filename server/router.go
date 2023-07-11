@@ -16,4 +16,6 @@ func (s *Server) setupRoutes() {
 
 	api := s.Router.PathPrefix(v1API).Subrouter()
 	api.HandleFunc("/devices", handler.GetDevices(s.DriverV45)).Methods(http.MethodGet).Name("GetDevices")
+	api.HandleFunc("/wares", handler.WaresUpload(s.DriverV45)).Methods(http.MethodGet).Name("WaresUpload")
+
 }

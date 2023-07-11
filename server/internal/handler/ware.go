@@ -17,8 +17,28 @@ func WaresUpload(
 			handleError(w, err, http.StatusInternalServerError, true)
 		}
 
+		wares := []user.WareData{
+			{
+				ItemCode:  101,
+				Name:      "SHAFTOLI",
+				Price:     30.50,
+				Count:     0,
+				GoodsType: 0,
+			},
+			{
+				ItemCode:  102,
+				Name:      "SAMSUNG A2",
+				Price:     100.30,
+				Count:     0,
+				GoodsType: 1,
+			},
+		}
+
 		for i := 0; i < ldCount; i++ {
-			dw.AddWareData(ctx, i, []user.WareData{})
+			err := dw.AddWareData(ctx, i, wares)
+			if err != nil {
+				handleError(w, err, http.StatusInternalServerError, true)
+			}
 		}
 
 		response, _ := json.Marshal(map[string]string{"status": "ok"})

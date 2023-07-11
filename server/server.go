@@ -53,7 +53,7 @@ func (s *Server) Create(ctx context.Context, config *config.Config) error {
 // Returns an error if an error occurs.
 func (s *Server) Serve(ctx context.Context) error {
 	idleConnsClosed := make(chan struct{}) // this is used to signal that we can not exit
-	go func(ctx context.Context, s *http.Server) {
+	go func(ctx context.Context, ss *http.Server) {
 		stop := make(chan os.Signal, 1)
 		signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
 
@@ -61,7 +61,11 @@ func (s *Server) Serve(ctx context.Context) error {
 
 		log.Info("Shutdown signal received")
 
-		if err := s.Shutdown(ctx); err != nil {
+		if err := ss.Shutdown(ctx); err != nil {
+			log.Error(err.Error())
+		}
+
+		if err := s.DriverV45.Close(); err != nil {
 			log.Error(err.Error())
 		}
 

@@ -3,10 +3,11 @@ package user
 import "context"
 
 type WareData struct {
-	Code  int
-	Price float32
-	Count int
-	Type  int
+	ItemCode  int
+	Name      string
+	Price     float32
+	Count     int
+	GoodsType int
 }
 
 // WareDataAdder  is an interface for adding ware data to device

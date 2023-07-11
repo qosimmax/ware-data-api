@@ -27,8 +27,48 @@ func (c *Client) AddWareData(ctx context.Context, ldIndex int, wares []user.Ware
 		return err
 	}
 
-	for _, _ = range wares {
+	for _, ware := range wares {
 		_, err = oleutil.CallMethod(c.drv, "GetEmptyPLUNumber")
+		if err != nil {
+			return err
+		}
+
+		_, err = oleutil.PutProperty(c.drv, "Price", ware.Price)
+		if err != nil {
+			return err
+		}
+
+		_, err = oleutil.PutProperty(c.drv, "ItemCode", ware.ItemCode)
+		if err != nil {
+			return err
+		}
+
+		_, err = oleutil.PutProperty(c.drv, "NameFirst", ware.Name)
+		if err != nil {
+			return err
+		}
+
+		_, err = oleutil.PutProperty(c.drv, "ShelfLife", 0)
+		if err != nil {
+			return err
+		}
+
+		_, err = oleutil.PutProperty(c.drv, "GroupCode", 0)
+		if err != nil {
+			return err
+		}
+
+		_, err = oleutil.PutProperty(c.drv, "GoodsType", ware.GoodsType)
+		if err != nil {
+			return err
+		}
+
+		_, err = oleutil.PutProperty(c.drv, "BCFormat", 7)
+		if err != nil {
+			return err
+		}
+
+		_, err = oleutil.CallMethod(c.drv, "SetPLUDataEx")
 		if err != nil {
 			return err
 		}
