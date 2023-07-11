@@ -68,6 +68,25 @@ func (c *Client) FindActiveDevices(ctx context.Context, fromIP, toIP string) ([]
 	return devices, nil
 }
 
+func (c *Client) GetCountLDDevice(ctx context.Context) (int, error) {
+	_, err := oleutil.CallMethod(c.drv, "GetCountLD")
+	if err != nil {
+		return 0, err
+	}
+
+	val, err := oleutil.GetProperty(c.drv, "LDCount")
+	if err != nil {
+		return 0, err
+	}
+
+	if val == nil {
+		return 0, nil
+	}
+
+	return int(val.Val), nil
+
+}
+
 func inc(ip net.IP) {
 	for j := len(ip) - 1; j >= 0; j-- {
 		ip[j]++
