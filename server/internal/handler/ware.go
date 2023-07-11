@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 	"ware-data-api/user"
 )
@@ -37,7 +38,8 @@ func WaresUpload(
 		for i := 0; i < ldCount; i++ {
 			err := dw.AddWareData(ctx, i, wares)
 			if err != nil {
-				handleError(w, err, http.StatusInternalServerError, true)
+				log.Error(err)
+				//handleError(w, err, http.StatusInternalServerError, true)
 			}
 		}
 

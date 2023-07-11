@@ -2,6 +2,7 @@ package driver
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-ole/go-ole/oleutil"
 	"ware-data-api/user"
 )
@@ -22,9 +23,13 @@ func (c *Client) AddWareData(ctx context.Context, ldIndex int, wares []user.Ware
 		return err
 	}
 
-	_, err = oleutil.CallMethod(c.drv, "Connect")
+	code, err := oleutil.CallMethod(c.drv, "Connect")
 	if err != nil {
 		return err
+	}
+
+	if code.Val != 0 {
+		return fmt.Errorf("not connected")
 	}
 
 	for _, ware := range wares {
