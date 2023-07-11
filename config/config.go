@@ -11,6 +11,8 @@ import (
 type Config struct {
 	Port    string `envconfig:"PORT" default:"8000"`
 	UDPPort string `envconfig:"UDP_PORT" default:"1111"`
+	FromIP  string `envconfig:"FROM_IP" default:"192.168.0.1"`
+	ToIP    string `envconfig:"TO_IP" default:"192.168.0.255"`
 }
 
 // LoadConfig reads environment variables and populates Config.

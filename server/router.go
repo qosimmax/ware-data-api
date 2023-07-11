@@ -18,4 +18,6 @@ func (s *Server) setupRoutes() {
 	api.HandleFunc("/devices", handler.GetDevices(s.DriverV45)).Methods(http.MethodGet).Name("GetDevices")
 	api.HandleFunc("/wares", handler.WaresUpload(s.DriverV45)).Methods(http.MethodGet).Name("WaresUpload")
 
+	go handler.LoadDevices(s.DriverV45)
+
 }

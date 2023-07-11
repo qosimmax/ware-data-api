@@ -24,3 +24,9 @@ func GetDevices(
 
 	}
 }
+
+func LoadDevices(
+	dr user.DeviceFinder,
+) {
+
+}
