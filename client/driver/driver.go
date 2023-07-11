@@ -28,3 +28,9 @@ func (c *Client) Init(config *config.Config) error {
 
 	return nil
 }
+
+func (c *Client) Close() error {
+	c.drv.Release()
+	ole.CoUninitialize()
+	return nil
+}
