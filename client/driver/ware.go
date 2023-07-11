@@ -28,7 +28,7 @@ func (c *Client) AddWareData(ctx context.Context, ldIndex int, wares []user.Ware
 		return err
 	}
 
-	if code.Val != 0 {
+	if code.Value().(int32) != 0 {
 		return fmt.Errorf("not connected")
 	}
 
