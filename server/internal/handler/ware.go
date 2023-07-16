@@ -2,9 +2,12 @@ package handler
 
 import (
 	"encoding/json"
-	log "github.com/sirupsen/logrus"
 	"net/http"
+	"strconv"
 	"ware-data-api/user"
+
+	log "github.com/sirupsen/logrus"
+	"github.com/xuri/excelize/v2"
 )
 
 func WaresUpload(
@@ -13,26 +16,66 @@ func WaresUpload(
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 
+		f, _, err := r.FormFile("file")
+		if err != nil {
+			handleError(w, err, http.StatusInternalServerError, true)
+			return
+		}
+
+		defer f.Close()
+
+		fe, err := excelize.OpenReader(f)
+		if err != nil {
+			handleError(w, err, http.StatusInternalServerError, true)
+			return
+
+		}
+
+		defer fe.Close()
+
+		sheetName := fe.GetSheetName(0)
+		// Get all the rows in the Sheet1.
+		rows, err := fe.GetRows(sheetName)
+		if err != nil {
+			handleError(w, err, http.StatusInternalServerError, true)
+			return
+		}
+
+		var (
+			wares []user.WareData
+		)
+
+		for i := 1; i < len(rows); i++ {
+			row := rows[i]
+
+			price, _ := strconv.Atoi(row[17])
+			if price > 999999 {
+				price = 0
+			}
+
+			itemCode, _ := strconv.Atoi(row[38])
+			if itemCode == 0 {
+				continue
+			}
+
+			goodsType := 0
+			if row[39] == "штучный" {
+				goodsType = 1
+			}
+
+			wares = append(wares, user.WareData{
+				ItemCode:  itemCode,
+				Name:      row[21],
+				Price:     price,
+				Count:     0,
+				GoodsType: goodsType,
+			})
+
+		}
+
 		ldCount, err := dw.GetCountLDDevice(ctx)
 		if err != nil {
 			handleError(w, err, http.StatusInternalServerError, true)
-		}
-
-		wares := []user.WareData{
-			{
-				ItemCode:  101,
-				Name:      "SHAFTOLI",
-				Price:     30.50,
-				Count:     0,
-				GoodsType: 0,
-			},
-			{
-				ItemCode:  102,
-				Name:      "SAMSUNG A2",
-				Price:     100.30,
-				Count:     0,
-				GoodsType: 1,
-			},
 		}
 
 		for i := 0; i < ldCount; i++ {

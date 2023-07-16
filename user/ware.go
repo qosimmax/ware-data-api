@@ -5,7 +5,7 @@ import "context"
 type WareData struct {
 	ItemCode  int
 	Name      string
-	Price     float32
+	Price     int
 	Count     int
 	GoodsType int
 }
