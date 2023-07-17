@@ -3,8 +3,9 @@ package driver
 import (
 	"context"
 	"fmt"
-	"github.com/go-ole/go-ole/oleutil"
 	"ware-data-api/user"
+
+	"github.com/go-ole/go-ole/oleutil"
 )
 
 func (c *Client) AddWareData(ctx context.Context, ldIndex int, wares []user.WareData) error {
@@ -33,7 +34,7 @@ func (c *Client) AddWareData(ctx context.Context, ldIndex int, wares []user.Ware
 	}
 
 	for _, ware := range wares {
-		_, err = oleutil.CallMethod(c.drv, "GetEmptyPLUNumber")
+		_, err = oleutil.PutProperty(c.drv, "PLUNumber", ware.ItemCode)
 		if err != nil {
 			return err
 		}
