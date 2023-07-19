@@ -1,9 +1,10 @@
 package driver
 
 import (
+	"ware-data-api/config"
+
 	ole "github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
-	"ware-data-api/config"
 )
 
 type Client struct {
@@ -11,7 +12,7 @@ type Client struct {
 }
 
 func (c *Client) Init(config *config.Config) error {
-	err := ole.CoInitialize(0)
+	err := ole.CoInitializeEx(0, ole.COINIT_MULTITHREADED)
 	if err != nil {
 		return err
 	}

@@ -33,6 +33,11 @@ func (c *Client) AddWareData(ctx context.Context, ldIndex int, wares []user.Ware
 		return fmt.Errorf("not connected")
 	}
 
+	_, err = oleutil.PutProperty(c.drv, "Password", 30)
+	if err != nil {
+		return err
+	}
+
 	for _, ware := range wares {
 		_, err = oleutil.PutProperty(c.drv, "PLUNumber", ware.ItemCode)
 		if err != nil {
@@ -81,10 +86,17 @@ func (c *Client) AddWareData(ctx context.Context, ldIndex int, wares []user.Ware
 
 	}
 
-	_, err = oleutil.CallMethod(c.drv, "Disconnect")
+	_, err = oleutil.CallMethod(c.drv, "Beep")
 	if err != nil {
 		return err
 	}
+	/*
+		_, err = oleutil.CallMethod(c.drv, "Disconnect")
+		if err != nil {
+			return err
+		}
+
+	*/
 
 	return nil
 }

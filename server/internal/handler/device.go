@@ -12,7 +12,7 @@ func GetDevices(
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 
-		devices, err := dr.FindActiveDevices(ctx, "192.168.0.1", "192.168.0.255")
+		devices, err := dr.FindActiveDevices(ctx, "192.168.0.1", "192.168.0.18")
 		if err != nil {
 			handleError(w, err, http.StatusInternalServerError, true)
 		}

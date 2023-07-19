@@ -82,7 +82,8 @@ func WaresUpload(
 			err := dw.AddWareData(ctx, i, wares)
 			if err != nil {
 				log.Error(err)
-				//handleError(w, err, http.StatusInternalServerError, true)
+				handleError(w, err, http.StatusInternalServerError, true)
+				return
 			}
 		}
 
