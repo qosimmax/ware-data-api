@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"ware-data-api/user"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/xuri/excelize/v2"
 )
 
@@ -81,7 +80,6 @@ func WaresUpload(
 		for i := 0; i < ldCount; i++ {
 			err := dw.AddWareData(ctx, i, wares)
 			if err != nil {
-				log.Error(err)
 				handleError(w, err, http.StatusInternalServerError, true)
 				return
 			}
