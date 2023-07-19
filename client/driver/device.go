@@ -2,9 +2,10 @@ package driver
 
 import (
 	"context"
-	"github.com/go-ole/go-ole/oleutil"
 	"net"
 	"ware-data-api/user"
+
+	"github.com/go-ole/go-ole/oleutil"
 )
 
 func (c *Client) FindActiveDevices(ctx context.Context, fromIP, toIP string) ([]user.DeviceData, error) {
@@ -41,6 +42,11 @@ func (c *Client) FindActiveDevices(ctx context.Context, fromIP, toIP string) ([]
 		}
 
 		val, err := oleutil.GetProperty(c.drv, "Connected")
+		if err != nil {
+			return nil, err
+		}
+
+		_, err = oleutil.CallMethod(c.drv, "Beep")
 		if err != nil {
 			return nil, err
 		}
