@@ -83,7 +83,7 @@ func WaresUpload(
 			if err != nil {
 				errs = append(errs, err)
 				//	handleError(w, err, http.StatusInternalServerError, true)
-				return
+				//return
 			}
 		}
 
