@@ -77,15 +77,17 @@ func WaresUpload(
 			handleError(w, err, http.StatusInternalServerError, true)
 		}
 
+		var errs []error
 		for i := 0; i < ldCount; i++ {
 			err := dw.AddWareData(ctx, i, wares)
 			if err != nil {
-				handleError(w, err, http.StatusInternalServerError, true)
+				errs = append(errs, err)
+				//	handleError(w, err, http.StatusInternalServerError, true)
 				return
 			}
 		}
 
-		response, _ := json.Marshal(map[string]string{"status": "ok"})
+		response, _ := json.Marshal(map[string]interface{}{"status": errs})
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write(response)
