@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"ware-data-api/user"
@@ -78,12 +79,11 @@ func WaresUpload(
 		}
 
 		var errs []error
+
 		for i := 0; i < ldCount; i++ {
 			err := dw.AddWareData(ctx, i, wares)
 			if err != nil {
-				errs = append(errs, err)
-				//	handleError(w, err, http.StatusInternalServerError, true)
-				//return
+				errs = append(errs, fmt.Errorf("error: %w", err))
 			}
 		}
 
