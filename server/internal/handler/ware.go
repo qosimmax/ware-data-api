@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"ware-data-api/user"
@@ -78,12 +77,12 @@ func WaresUpload(
 			handleError(w, err, http.StatusInternalServerError, true)
 		}
 
-		var errs []error
+		var errs []string
 
 		for i := 0; i < ldCount; i++ {
 			err := dw.AddWareData(ctx, i, wares)
 			if err != nil {
-				errs = append(errs, fmt.Errorf("error: %w", err))
+				errs = append(errs, err.Error())
 			}
 		}
 
