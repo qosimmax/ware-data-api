@@ -43,22 +43,38 @@ func WaresUpload(
 		var (
 			wares []user.WareData
 		)
+		headers := rows[0]
+		var (
+			typeProductIndex, priceIndex, itemCodeIndex int
+		)
+		for i := 0; i < len(headers); i++ {
+			if headers[i] == "Тип товара" {
+				typeProductIndex = i
+			}
+			if headers[i] == "Цена со скидкой" {
+				typeProductIndex = i
+			}
+			if headers[i] == "Код товара" {
+				typeProductIndex = i
+			}
+		}
 
 		for i := 1; i < len(rows); i++ {
+
 			row := rows[i]
 
-			price, _ := strconv.Atoi(row[17])
+			price, _ := strconv.Atoi(row[priceIndex])
 			if price > 999999 {
 				price = 0
 			}
 
-			itemCode, _ := strconv.Atoi(row[38])
+			itemCode, _ := strconv.Atoi(row[itemCodeIndex])
 			if itemCode == 0 {
 				continue
 			}
 
 			goodsType := 0
-			if row[39] == "штучный" {
+			if row[typeProductIndex] == "штучный" {
 				goodsType = 1
 			}
 
